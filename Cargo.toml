@@ -1,0 +1,4 @@
+[package]
+name = "command_line_parser"
+version = "0.1.0"
+authors = ["Tyler Wolf Leonhardt <tyle@microsoft.com>"]
