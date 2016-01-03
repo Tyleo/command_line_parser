@@ -1,8 +1,8 @@
 mod test_command_line {
     command_line!(
         TestCommandLine {
-            (should_output_text, bool, "-t"),
-            (bytes, String, "-b")
+            (should_output_text, bool, "-t", "If true, the program will outpuut ASCII text; otherwise it will output hex text."),
+            (bytes, String, "-b", "The two byte strings to xor together. These must be separated by a space.")
         }
     );
 }

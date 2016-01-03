@@ -6,7 +6,8 @@ macro_rules! command_line {
                 (
                     $field_ident: ident,
                     $field_type: ty,
-                    $field_flag: expr
+                    $field_flag: expr,
+                    $field_description: expr
                 )
             ),*
         }
