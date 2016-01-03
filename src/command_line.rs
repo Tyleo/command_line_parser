@@ -8,7 +8,7 @@ macro_rules! command_line {
                     $field_type: ty,
                     $field_flag: expr
                 )
-            ),+
+            ),*
         }
     ) => {
         use command_line_parser::CommandLineParser;
@@ -16,9 +16,10 @@ macro_rules! command_line {
         use std::collections::vec_deque::VecDeque;
 
         pub struct $command_line_ident {
+            pub this_program_name: String,
             $(
                 pub $field_ident: Option<$field_type>,
-            )+
+            )*
         }
 
         impl $command_line_ident {
@@ -32,9 +33,20 @@ macro_rules! command_line {
 
         impl CommandLineParser for $command_line_ident {
             fn parse(args: &mut VecDeque<String>) -> Self {
+                let this_program_name = {
+                    match args.pop_front() {
+                        Some(arg) => {
+                            arg
+                        },
+                        None => {
+                            panic!("Error, no program name was passed in as an argument on the command line.");
+                        },
+                    }
+                };
+
                 $(
                     let mut $field_ident: Option<$field_type> = None;
-                )+
+                )*
 
                 while !args.is_empty() {
                     match args.pop_front() {
@@ -44,7 +56,7 @@ macro_rules! command_line {
                                     $field_flag => {
                                         $field_ident = Some(<$field_type as CommandLineParser>::parse(args));
                                     },
-                                )+
+                                )*
                                 _ => {
                                     panic!("Error matching flag: {}", arg);
                                 }
@@ -57,9 +69,10 @@ macro_rules! command_line {
                 }
 
                 $command_line_ident {
+                    this_program_name: this_program_name,
                     $(
                         $field_ident: $field_ident
-                    ),+
+                    ),*
                 }
             }
         }

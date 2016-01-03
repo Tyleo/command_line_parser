@@ -11,7 +11,8 @@ use tests::test_command_line::TestCommandLine;
 
 #[test]
 fn test_bool_parse() {
-    let command_line = vec!["-t".to_string(),
+    let command_line = vec!["test_program_name.exe".to_string(),
+                            "-t".to_string(),
                             "true".to_string(),
                             "-b".to_string(),
                             "0123456789ABCDEF".to_string()];
