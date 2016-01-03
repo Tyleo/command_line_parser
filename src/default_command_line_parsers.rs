@@ -69,7 +69,7 @@ impl <T> CommandLineParser for Vec<T>
     where T: CommandLineParser {
     fn parse(args: &mut VecDeque<String>) -> Self {
         let len = usize::parse(args);
-        [0..len].iter()
+        (0..len).into_iter()
                 .map(
                     |_| {
                         T::parse(args)
