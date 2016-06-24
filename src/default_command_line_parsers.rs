@@ -1,5 +1,6 @@
 use command_line_parser::CommandLineParser;
 use std::collections::vec_deque::VecDeque;
+use std::path::PathBuf;
 use std::str::FromStr;
 
 impl CommandLineParser for bool {
@@ -76,6 +77,21 @@ impl <T> CommandLineParser for Vec<T>
                     }
                 )
                 .collect()
+    }
+}
+
+impl CommandLineParser for PathBuf {
+    fn parse(args: &mut VecDeque<String>) -> Self {
+        match args.pop_front() {
+            Some(arg) => {
+                let mut result = PathBuf::new();
+                result.push(arg);
+                result
+            },
+            None => {
+                panic!("Error popping arg queue in bool CommandLineParser. Queue is probably empty.");
+            },
+        }
     }
 }
 
